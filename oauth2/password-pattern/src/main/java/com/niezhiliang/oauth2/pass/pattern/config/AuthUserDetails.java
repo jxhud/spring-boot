@@ -1,10 +1,8 @@
 package com.niezhiliang.oauth2.pass.pattern.config;
 
-import com.niezhiliang.oauth2.pass.pattern.domain.Authority;
-import com.niezhiliang.oauth2.pass.pattern.domain.AuthorityExample;
-import com.niezhiliang.oauth2.pass.pattern.domain.Credentials;
-import com.niezhiliang.oauth2.pass.pattern.domain.CredentialsExample;
+import com.niezhiliang.oauth2.pass.pattern.domain.*;
 import com.niezhiliang.oauth2.pass.pattern.mapper.AuthorityMapper;
+import com.niezhiliang.oauth2.pass.pattern.mapper.CredentialsAuthoritiesMapper;
 import com.niezhiliang.oauth2.pass.pattern.mapper.CredentialsMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -28,6 +26,10 @@ import java.util.List;
 public class AuthUserDetails implements UserDetailsService {
     @Autowired
     private CredentialsMapper credentialsMapper;
+    @Autowired
+    private AuthorityMapper authorityMapper;
+    @Autowired
+    private CredentialsAuthoritiesMapper credentialsAuthoritiesMapper;
 
     @Override
     public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
@@ -39,12 +41,17 @@ public class AuthUserDetails implements UserDetailsService {
         } catch (Exception e) {
             throw new UsernameNotFoundException("User"+userName+"can not be found");
         }
-//        AuthorityExample authorityExample = new AuthorityExample();
-//        authorityExample.createCriteria().andIdIsNotNull();
-//        Authority authority = authorityMapper.selectByExample(authorityExample).get(0);
+        CredentialsAuthoritiesExample credentialsAuthoritiesExample =
+                new CredentialsAuthoritiesExample();
+        credentialsAuthoritiesExample.createCriteria().andCredentialsIdEqualTo(credentials.getId().longValue());
+        List<CredentialsAuthorities> credentialsAuthoritiesList = credentialsAuthoritiesMapper.selectByExample(credentialsAuthoritiesExample);
+        AuthorityExample authorityExample = new AuthorityExample();
+        authorityExample.createCriteria().andIdEqualTo(credentialsAuthoritiesList.get(0).getAuthoritiesId().intValue());
+        List<Authority> authorityList = authorityMapper.selectByExample(authorityExample);
         Collection<GrantedAuthority> authList = new ArrayList<GrantedAuthority>();
-        authList.add(new SimpleGrantedAuthority("ROLE_USER"));
-
+        authorityList.forEach(authority -> {
+            ((ArrayList<GrantedAuthority>) authList).add(new SimpleGrantedAuthority(authority.getAuthority()));
+        });
         User user = new User(credentials.getName(),credentials.getPassword(),true,true,true,true,authList);
 
         return  user;

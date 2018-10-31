@@ -4,7 +4,9 @@ import com.niezhiliang.oauth2.pass.pattern.domain.Authority;
 import com.niezhiliang.oauth2.pass.pattern.domain.AuthorityExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface AuthorityMapper {
     long countByExample(AuthorityExample example);
 

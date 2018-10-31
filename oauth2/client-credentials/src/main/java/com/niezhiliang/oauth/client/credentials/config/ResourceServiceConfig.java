@@ -10,11 +10,13 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Res
  * @Author NieZhiLiang
  * @Email nzlsgg@163.com
  * @Date 2018/10/29 下午8:03
+ * 资源服务器
  */
 @Configuration
 @EnableResourceServer
 public class ResourceServiceConfig extends ResourceServerConfigurerAdapter {
 
+    //定义资源服务器的id
     private static final String DEMO_RESOURCE_ID = "index";
 
     @Override

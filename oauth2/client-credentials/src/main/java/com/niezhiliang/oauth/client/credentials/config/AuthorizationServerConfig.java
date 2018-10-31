@@ -19,6 +19,7 @@ import org.springframework.security.oauth2.provider.token.store.redis.RedisToken
  * @Author NieZhiLiang
  * @Email nzlsgg@163.com
  * @Date 2018/10/29 下午8:03
+ * 认证服务器
  */
 @Configuration
 @EnableAuthorizationServer
@@ -34,11 +35,23 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     }
 
 
+    /**
+     * 重写获取客户端配置的方法 这里网上基本都是配置在内存中 生产环境不可能说放在内存里面
+     * 这样配置我们就能读取数据库中的客户端啦
+     * @param clients
+     * @throws Exception
+     */
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.withClientDetails(getClientDetails());
     }
 
+    /**
+     * 配置tokenStore 这里我们使用的是redis redis的机制很符合token的自动过期我们的需求
+     * 配置访问接受get和post的请求
+     * @param endpoints
+     * @throws Exception
+     */
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
         endpoints

@@ -4,7 +4,9 @@ import com.niezhiliang.oauth2.pass.pattern.domain.CredentialsAuthorities;
 import com.niezhiliang.oauth2.pass.pattern.domain.CredentialsAuthoritiesExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface CredentialsAuthoritiesMapper {
     long countByExample(CredentialsAuthoritiesExample example);
 

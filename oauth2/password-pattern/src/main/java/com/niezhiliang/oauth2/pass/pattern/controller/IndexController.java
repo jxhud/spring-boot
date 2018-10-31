@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.security.RolesAllowed;
+
 /**
  * @Author NieZhiLiang
  * @Email nzlsgg@163.com
@@ -20,6 +22,7 @@ public class IndexController {
     public String getProduct(@PathVariable String id) {
         //for debug
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        System.out.println(authentication.getPrincipal());
         return "product id : " + id;
     }
 
@@ -27,6 +30,7 @@ public class IndexController {
     public String getOrder(@PathVariable String id) {
         //for debug
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        System.out.println(authentication.getPrincipal());
         return "order id : " + id;
     }
 }
