@@ -1,0 +1,9 @@
+server:
+  port: 6666
+  custom:
+    httpPort: 9998
+  ssl:
+    key-store: classpath:nzl.pfx
+    key-store-password: wM7Lqfe0
+    key-store-type: PFX
+    key-alias: huluwa

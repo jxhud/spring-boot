@@ -21,12 +21,21 @@ public class LoginController {
     @Autowired
     private LoginService loginService;
 
+    /**
+     * 登录
+     * @param requestJson
+     * @return
+     */
     @RequestMapping(value = "in")
     public String login(@RequestBody JSONObject requestJson) {
         CommonUtils.hasAllRequired(requestJson,"userName,password,rememberMe");
         return loginService.userLogin(requestJson);
     }
 
+    /**
+     * 退出
+     * @return
+     */
     @RequestMapping(value = "out")
     public String logout() {
         Subject subject = SecurityUtils.getSubject();
