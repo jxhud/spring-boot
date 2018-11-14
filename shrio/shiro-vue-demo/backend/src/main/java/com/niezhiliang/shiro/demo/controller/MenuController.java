@@ -45,7 +45,8 @@ public class MenuController {
 
     @RequestMapping(value = "query")
     @Log(value = "查询菜单列表")
-    public String query(@RequestBody JSONObject requestJson) {
+    public String query() {
+        JSONObject requestJson = new JSONObject();
         return menuService.queryMenu(requestJson);
     }
 }

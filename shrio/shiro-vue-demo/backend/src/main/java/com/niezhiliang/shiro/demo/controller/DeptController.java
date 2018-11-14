@@ -43,7 +43,8 @@ public class DeptController {
 
     @RequestMapping(value = "query")
     @Log(value = "查询部门列表")
-    public String query(@RequestBody JSONObject requestJson) {
+    public String query() {
+         JSONObject requestJson = new JSONObject();
         return deptService.selectDept(requestJson);
     }
 }

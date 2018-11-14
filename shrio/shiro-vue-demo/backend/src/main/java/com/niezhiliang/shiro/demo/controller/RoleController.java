@@ -43,7 +43,8 @@ public class RoleController {
 
     @RequestMapping(value = "query")
     @Log(value = "查询角色列表")
-    public String query(@RequestBody JSONObject requestJson) {
+    public String query() {
+        JSONObject requestJson = new JSONObject();
         return roleService.selectRole(requestJson);
     }
 }
