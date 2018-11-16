@@ -76,6 +76,7 @@ public class MenuServiceImpl implements MenuService {
         List<Menu> menuList = menuMapper.getParentMenu();
         MenuTree treeView =  recursion(menuList);
         treeView.setTitle("请选择");
+        treeView.setId(0);
         return CommonUtils.successJson(treeView);
     }
 
@@ -112,6 +113,7 @@ public class MenuServiceImpl implements MenuService {
             for (Menu menu : menus) {
                 MenuTree treeMenus = new MenuTree();
                 treeMenus.setTitle(menu.getMenuName());
+                treeMenus.setId(menu.getId());
                 List<Menu> menuList = menuMapper.selectChildMenu(menu.getId());
                 treeMenus.setChildren(recursion(menuList).getChildren());
                 menuTrees.add(treeMenus);

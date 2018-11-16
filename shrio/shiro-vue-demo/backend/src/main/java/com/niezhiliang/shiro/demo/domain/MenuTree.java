@@ -8,9 +8,19 @@ import java.util.List;
  * @Date 2018/11/16 上午11:19
  */
 public class MenuTree {
+    private int id;
+
     private String title;
 
     private List<MenuTree> children;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getTitle() {
         return title;

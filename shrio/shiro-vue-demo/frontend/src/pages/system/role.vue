@@ -1,15 +1,15 @@
 <template>
   <div style="margin: 20px;padding: 20px">
     <div style="height: 50px">
-      <Button type="success" style="float:right;margin-right: 50px" size="small" @click="addRole">新增</Button>
+      <Button type="success" style="float:right;margin-right: 50px" size="small" @click="addRoleUi">新增</Button>
     </div>
     <Table border :columns="roleCols" :data="roles"></Table>
     <Modal
       v-model="modal5"
       title="添加"
-      width="600" z-index="10000">
+      width="600" :z-index=10000 @on-ok="addRole()">
       <div style="text-align: center">
-        <label>角色名称：</label><Input  placeholder="角色名称" style="width: 300px" size="large"/>
+        <label>角色名称：</label><Input v-model="newRole.roleName" placeholder="角色名称" style="width: 300px" size="large"/>
       </div>
       <div style="text-align: center;margin-top: 20px">
         <div style="display:inline-block">
@@ -17,7 +17,7 @@
           角色权限：
         </span>
         </div>
-        <Tree :data="menus" show-checkbox multiple style="display:inline-block"></Tree>
+        <Tree :data="menus" ref="tree" show-checkbox multiple style="display:inline-block"></Tree>
       </div>
     </Modal>
   </div>
@@ -65,7 +65,7 @@
                   },
                   on: {
                     click: () => {
-                      this.remove(params.index)
+                      this.delRole(params.index)
                     }
                   }
                 }, '删除')
@@ -76,7 +76,11 @@
         roles: [],
         modal5: false,
         loading: false,
-        menus: []
+        menus: [],
+        newRole: {
+          roleName: '',
+          checkMenus: []
+        }
      }
     },
     created() {
@@ -91,7 +95,7 @@
           }
         })
       },
-      addRole: function () {
+      addRoleUi: function () {
         this.modal5 = true;
       },
       getTree: function () {
@@ -100,6 +104,32 @@
              this.menus.push(res.data);
           }
         })
+      },
+      addRole: function () {
+        const nodes = this.$refs.tree.getCheckedNodes();
+        for(var i =0; i < nodes.length; i++) {
+          if (nodes[i].id != 0) {
+            this.newRole.checkMenus.push(nodes[i].id)
+          }
+        }
+       http.post("/role/add",this.newRole).then((res) => {
+         if (res.code === 100) {
+           this.initRoles()
+          this.$Message.success("角色添加成功");
+         } else if(res.code === 400) {
+           this.$Message.warning("系统异常");
+         }
+       })
+      },
+      delRole: function (index) {
+          http.post("/role/delete",{id: this.roles[index].id}).then((res) => {
+           if (res.code === 100) {
+             this.roles.splice(index, 1);
+             this.$Message.success(res.msg);
+           } else {
+             this.$Message.warning(res.msg);
+           }
+         })
       }
     }
   }

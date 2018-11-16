@@ -23,7 +23,7 @@ public class RoleController {
     @RequestMapping(value = "add")
     @Log(value = "添加角色")
     public String add(@RequestBody JSONObject requestJson) {
-        CommonUtils.hasAllRequired(requestJson,"roleName");
+        CommonUtils.hasAllRequired(requestJson,"roleName,checkMenus");
         return roleService.addRole(requestJson);
     }
 
