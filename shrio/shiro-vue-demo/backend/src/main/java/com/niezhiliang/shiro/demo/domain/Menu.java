@@ -7,6 +7,8 @@ public class Menu {
 
     private String icon;
 
+    private Integer parentId;
+
     private String menuName;
 
     private String permissions;
@@ -27,6 +29,14 @@ public class Menu {
 
     public void setIcon(String icon) {
         this.icon = icon == null ? null : icon.trim();
+    }
+
+    public Integer getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(Integer parentId) {
+        this.parentId = parentId;
     }
 
     public String getMenuName() {

@@ -30,34 +30,34 @@
                              targetProject="src/main/java" type="XMLMAPPER" >
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
-        <table tableName="user" domainObjectName="User"
-               enableCountByExample="true"
-               enableUpdateByExample="true"
-               enableDeleteByExample="true"
-               enableSelectByExample="true"
-               selectByExampleQueryId="true"
-        ></table>
-        <table tableName="dept" domainObjectName="Dept"
-               enableCountByExample="true"
-               enableUpdateByExample="true"
-               enableDeleteByExample="true"
-               enableSelectByExample="true"
-               selectByExampleQueryId="true"
-        ></table>
-        <table tableName="role" domainObjectName="Role"
-               enableCountByExample="true"
-               enableUpdateByExample="true"
-               enableDeleteByExample="true"
-               enableSelectByExample="true"
-               selectByExampleQueryId="true"
-        ></table>
-        <table tableName="user_role" domainObjectName="UserRole"
-               enableCountByExample="true"
-               enableUpdateByExample="true"
-               enableDeleteByExample="true"
-               enableSelectByExample="true"
-               selectByExampleQueryId="true"
-        ></table>
+        <!--<table tableName="user" domainObjectName="User"-->
+               <!--enableCountByExample="true"-->
+               <!--enableUpdateByExample="true"-->
+               <!--enableDeleteByExample="true"-->
+               <!--enableSelectByExample="true"-->
+               <!--selectByExampleQueryId="true"-->
+        <!--&gt;</table>-->
+        <!--<table tableName="dept" domainObjectName="Dept"-->
+               <!--enableCountByExample="true"-->
+               <!--enableUpdateByExample="true"-->
+               <!--enableDeleteByExample="true"-->
+               <!--enableSelectByExample="true"-->
+               <!--selectByExampleQueryId="true"-->
+        <!--&gt;</table>-->
+        <!--<table tableName="role" domainObjectName="Role"-->
+               <!--enableCountByExample="true"-->
+               <!--enableUpdateByExample="true"-->
+               <!--enableDeleteByExample="true"-->
+               <!--enableSelectByExample="true"-->
+               <!--selectByExampleQueryId="true"-->
+        <!--&gt;</table>-->
+        <!--<table tableName="user_role" domainObjectName="UserRole"-->
+               <!--enableCountByExample="true"-->
+               <!--enableUpdateByExample="true"-->
+               <!--enableDeleteByExample="true"-->
+               <!--enableSelectByExample="true"-->
+               <!--selectByExampleQueryId="true"-->
+        <!--&gt;</table>-->
         <table tableName="menu" domainObjectName="Menu"
                enableCountByExample="true"
                enableUpdateByExample="true"
@@ -65,19 +65,19 @@
                enableSelectByExample="true"
                selectByExampleQueryId="true"
         ></table>
-        <table tableName="role_menu" domainObjectName="RoleMenu"
-               enableCountByExample="true"
-               enableUpdateByExample="true"
-               enableDeleteByExample="true"
-               enableSelectByExample="true"
-               selectByExampleQueryId="true"
-        ></table>
-        <table tableName="logs" domainObjectName="Logs"
-               enableCountByExample="true"
-               enableUpdateByExample="true"
-               enableDeleteByExample="true"
-               enableSelectByExample="true"
-               selectByExampleQueryId="true"
-        ></table>
+        <!--<table tableName="role_menu" domainObjectName="RoleMenu"-->
+               <!--enableCountByExample="true"-->
+               <!--enableUpdateByExample="true"-->
+               <!--enableDeleteByExample="true"-->
+               <!--enableSelectByExample="true"-->
+               <!--selectByExampleQueryId="true"-->
+        <!--&gt;</table>-->
+        <!--<table tableName="logs" domainObjectName="Logs"-->
+               <!--enableCountByExample="true"-->
+               <!--enableUpdateByExample="true"-->
+               <!--enableDeleteByExample="true"-->
+               <!--enableSelectByExample="true"-->
+               <!--selectByExampleQueryId="true"-->
+        <!--&gt;</table>-->
     </context>
 </generatorConfiguration>

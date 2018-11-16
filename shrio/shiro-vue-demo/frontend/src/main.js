@@ -8,6 +8,8 @@ import 'iview/dist/styles/iview.css';
 import './my-theme/index.less'
 import moment from 'moment'
 import time from './components/time'
+import Vuex from 'vuex'
+
 
 //时间格式化过滤器
 Vue.filter('time', function (value, formatString) {
@@ -23,6 +25,7 @@ Vue.prototype.timeFormat = function (value, formatString) {
 
 Vue.config.productionTip = false
 Vue.use(iView,time);
+Vue.use(Vuex);
 
 /* eslint-disable no-new */
 new Vue({

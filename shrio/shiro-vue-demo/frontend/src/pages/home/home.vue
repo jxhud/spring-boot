@@ -1,12 +1,13 @@
 <template>
   <div class="home">
     <Layout class="home">
-      <Header style="background-color: #ffc900;height: 50px">
-        <h2 style="color: white">Shiro Demo</h2>
+      <Header style="background-color: #fffee6;height: 50px">
+        <h2 style="color: #ffc900">Shiro Demo</h2>
       </Header>
       <Layout>
-        <Sider hide-trigger style="background-color: #999">
-          <Menu active-name="1-1" :open-names="['1']" style="width: 100%;background-color: #999;color:white ">
+        <Sider hide-trigger style="background-color:#fffee6;">
+          <Menu @on-select="changeItem" @on-open-change="getOpenMenu" :active-name="this.$store.state.menu.active"
+                :open-names="this.$store.state.menu.open_names" style="width: 100%;background-color: #fffee6;color:#ffc900 ">
             <Submenu name="1">
               <template slot="title">
                 <Icon type="ios-analytics" />
@@ -36,13 +37,34 @@
 </template>
 
 <script>
+  import store from '../../store/store'
+  import { mapState,mapMutations,mapActions } from 'vuex';
+
   export default {
     name: 'App',
     data () {
       return {
-
       }
-    }
+    },
+    created() {
+    },
+    computed: {
+      ...mapState([
+        'menu'
+      ])
+    },
+    store,
+    methods: {
+      ...mapMutations([
+        'setMenu','setOption'
+      ]),
+      changeItem: function (name) {
+        this.$store.commit('setMenu',name)
+      },
+      getOpenMenu: function (name) {
+        this.$store.commit('setOption',name)
+      }
+    },
   }
 </script>
 
@@ -51,6 +73,6 @@
     width: 100%;
     height: 100%;
     position: absolute;
-    z-index:999999999999;
+    z-index:9999;
   }
 </style>

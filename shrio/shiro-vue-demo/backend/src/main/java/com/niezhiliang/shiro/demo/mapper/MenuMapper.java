@@ -29,4 +29,8 @@ public interface MenuMapper {
     int updateByPrimaryKey(Menu record);
 
     List<Menu> getMenuByRoleId(@Param("roleId") Integer roleId);
+
+    List<Menu> getParentMenu();
+
+    List<Menu> selectChildMenu(@Param("id") Integer id);
 }

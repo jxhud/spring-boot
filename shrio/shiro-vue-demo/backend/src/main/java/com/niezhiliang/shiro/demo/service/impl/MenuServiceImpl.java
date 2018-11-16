@@ -4,12 +4,16 @@ import com.alibaba.fastjson.JSONObject;
 import com.niezhiliang.shiro.demo.constant.ErrorCode;
 import com.niezhiliang.shiro.demo.domain.Menu;
 import com.niezhiliang.shiro.demo.domain.MenuExample;
+import com.niezhiliang.shiro.demo.domain.MenuTree;
+import com.niezhiliang.shiro.demo.domain.TreeView;
 import com.niezhiliang.shiro.demo.mapper.MenuMapper;
 import com.niezhiliang.shiro.demo.service.MenuService;
 import com.niezhiliang.shiro.demo.utils.CommonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.View;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -65,5 +69,56 @@ public class MenuServiceImpl implements MenuService {
     @Override
     public List<Menu> getMenuByRoleId(Integer roleId) {
         return menuMapper.getMenuByRoleId(roleId);
+    }
+
+    @Override
+    public String tree() {
+        List<Menu> menuList = menuMapper.getParentMenu();
+        MenuTree treeView =  recursion(menuList);
+        treeView.setTitle("请选择");
+        return CommonUtils.successJson(treeView);
+    }
+
+    /**
+     * 权限树查询
+     * @param menus
+     * @return
+     */
+//    public TreeView recursion(List<Menu> menus) {
+//        TreeView treeView = new TreeView();
+//        if (menus.isEmpty()) {
+//            return  treeView;
+//        } else {
+//            List<TreeView> treeViewList = new ArrayList<>();
+//            for (Menu menu : menus) {
+//                TreeView childTreeView = new TreeView();
+//                childTreeView.setMenu(menu);
+//                List<Menu> menuList = menuMapper.selectChildMenu(menu.getId());
+//                childTreeView.setTreeViews(recursion(menuList).getTreeViews());
+//                treeViewList.add(childTreeView);
+//            }
+//            treeView.setTreeViews(treeViewList);
+//            return treeView;
+//        }
+//
+//    }
+
+    public MenuTree recursion(List<Menu> menus) {
+        MenuTree menuTree = new MenuTree();
+        if (menus.isEmpty()) {
+            return menuTree;
+        } else {
+            List<MenuTree> menuTrees = new ArrayList<>();
+            for (Menu menu : menus) {
+                MenuTree treeMenus = new MenuTree();
+                treeMenus.setTitle(menu.getMenuName());
+                List<Menu> menuList = menuMapper.selectChildMenu(menu.getId());
+                treeMenus.setChildren(recursion(menuList).getChildren());
+                menuTrees.add(treeMenus);
+
+            }
+            menuTree.setChildren(menuTrees);
+        }
+        return menuTree;
     }
 }

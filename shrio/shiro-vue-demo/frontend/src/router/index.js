@@ -6,6 +6,7 @@ import user from '@/pages/system/user'
 import menu from '@/pages/system/menu'
 import dept from '@/pages/system/dept'
 import role from '@/pages/system/role'
+import nofound from '../pages/home/404'
 
 Vue.use(Router)
 
@@ -46,6 +47,15 @@ export default new Router({
       path: '/login',
       name: 'Login',
       component: Login
+    },
+    {
+      path: '/404',
+      name: '404',
+      component: nofound
+    },
+    {
+      path: '*', // 此处需特别注意至于最底部
+      redirect: '/404'
     }
   ]
 })

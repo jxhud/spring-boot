@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="com.niezhiliang.shiro.demo.domain.Menu">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="icon" jdbcType="VARCHAR" property="icon" />
+    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
     <result column="menu_name" jdbcType="VARCHAR" property="menuName" />
     <result column="permissions" jdbcType="VARCHAR" property="permissions" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
@@ -67,7 +68,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, icon, menu_name, permissions, create_time
+    id, icon, parent_id, menu_name, permissions, create_time
   </sql>
   <select id="selectByExample" parameterType="com.niezhiliang.shiro.demo.domain.MenuExample" resultMap="BaseResultMap">
     select
@@ -101,10 +102,12 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.niezhiliang.shiro.demo.domain.Menu">
-    insert into menu (id, icon, menu_name, 
-      permissions, create_time)
-    values (#{id,jdbcType=INTEGER}, #{icon,jdbcType=VARCHAR}, #{menuName,jdbcType=VARCHAR}, 
-      #{permissions,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
+    insert into menu (id, icon, parent_id, 
+      menu_name, permissions, create_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{icon,jdbcType=VARCHAR}, #{parentId,jdbcType=INTEGER}, 
+      #{menuName,jdbcType=VARCHAR}, #{permissions,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.niezhiliang.shiro.demo.domain.Menu">
     insert into menu
@@ -114,6 +117,9 @@
       </if>
       <if test="icon != null">
         icon,
+      </if>
+      <if test="parentId != null">
+        parent_id,
       </if>
       <if test="menuName != null">
         menu_name,
@@ -131,6 +137,9 @@
       </if>
       <if test="icon != null">
         #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null">
+        #{parentId,jdbcType=INTEGER},
       </if>
       <if test="menuName != null">
         #{menuName,jdbcType=VARCHAR},
@@ -158,6 +167,9 @@
       <if test="record.icon != null">
         icon = #{record.icon,jdbcType=VARCHAR},
       </if>
+      <if test="record.parentId != null">
+        parent_id = #{record.parentId,jdbcType=INTEGER},
+      </if>
       <if test="record.menuName != null">
         menu_name = #{record.menuName,jdbcType=VARCHAR},
       </if>
@@ -176,6 +188,7 @@
     update menu
     set id = #{record.id,jdbcType=INTEGER},
       icon = #{record.icon,jdbcType=VARCHAR},
+      parent_id = #{record.parentId,jdbcType=INTEGER},
       menu_name = #{record.menuName,jdbcType=VARCHAR},
       permissions = #{record.permissions,jdbcType=VARCHAR},
       create_time = #{record.createTime,jdbcType=TIMESTAMP}
@@ -188,6 +201,9 @@
     <set>
       <if test="icon != null">
         icon = #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null">
+        parent_id = #{parentId,jdbcType=INTEGER},
       </if>
       <if test="menuName != null">
         menu_name = #{menuName,jdbcType=VARCHAR},
@@ -204,6 +220,7 @@
   <update id="updateByPrimaryKey" parameterType="com.niezhiliang.shiro.demo.domain.Menu">
     update menu
     set icon = #{icon,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=INTEGER},
       menu_name = #{menuName,jdbcType=VARCHAR},
       permissions = #{permissions,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP}
@@ -212,5 +229,11 @@
   <select id="getMenuByRoleId" resultMap="BaseResultMap">
     select m.* from menu m left join role_menu r on m.id = r.menu_id
     where role_id = #{roleId}
+  </select>
+  <select id="getParentMenu" resultMap="BaseResultMap">
+    select * from menu where parent_id = 0
+  </select>
+  <select id="selectChildMenu" resultMap="BaseResultMap" >
+    select * from menu where parent_id = #{id}
   </select>
 </mapper>

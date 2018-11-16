@@ -21,4 +21,6 @@ public interface MenuService {
     String queryMenu(JSONObject requestJson);
 
     List<Menu> getMenuByRoleId(Integer roleId);
+
+    String tree();
 }

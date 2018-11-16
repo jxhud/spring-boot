@@ -49,4 +49,10 @@ public class MenuController {
         JSONObject requestJson = new JSONObject();
         return menuService.queryMenu(requestJson);
     }
+
+    @RequestMapping(value = "tree")
+    public String treeQuery() {
+
+        return  menuService.tree();
+    }
 }
