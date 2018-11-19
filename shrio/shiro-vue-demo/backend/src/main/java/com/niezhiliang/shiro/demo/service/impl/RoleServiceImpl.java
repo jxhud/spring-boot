@@ -2,11 +2,10 @@ package com.niezhiliang.shiro.demo.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.niezhiliang.shiro.demo.constant.ErrorCode;
-import com.niezhiliang.shiro.demo.domain.Role;
-import com.niezhiliang.shiro.demo.domain.RoleExample;
-import com.niezhiliang.shiro.demo.domain.RoleMenu;
+import com.niezhiliang.shiro.demo.domain.*;
 import com.niezhiliang.shiro.demo.mapper.RoleMapper;
 import com.niezhiliang.shiro.demo.mapper.RoleMenuMapper;
+import com.niezhiliang.shiro.demo.mapper.UserRoleMapper;
 import com.niezhiliang.shiro.demo.service.RoleService;
 import com.niezhiliang.shiro.demo.utils.CommonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +24,8 @@ public class RoleServiceImpl implements RoleService {
     private RoleMapper roleMapper;
     @Autowired
     private RoleMenuMapper roleMenuMapper;
+    @Autowired
+    private UserRoleMapper userRoleMapper;
 
     @Override
     public List<Role> getUserRoleByUserId(Integer userId) {
@@ -52,8 +53,17 @@ public class RoleServiceImpl implements RoleService {
     @Override
     @Transactional
     public String deleteRole(JSONObject requestJson) {
+        UserRoleExample example = new UserRoleExample();
+        example.createCriteria().andRoleIdEqualTo(requestJson.getIntValue("id"));
+        List<UserRole> userRoles = userRoleMapper.selectByExample(example);
+        if (!userRoles.isEmpty()) {
+            return CommonUtils.errorJson(ErrorCode.E_10008);
+        }
         int i = roleMapper.deleteByPrimaryKey(requestJson.getIntValue("id"));
         if (i > 0) {
+            RoleMenuExample roleMenuExample = new RoleMenuExample();
+            roleMenuExample.createCriteria().andRoleIdEqualTo(requestJson.getIntValue("id"));
+            roleMenuMapper.deleteByExample(roleMenuExample);
             return CommonUtils.successJson("删除成功");
         }
         return CommonUtils.errorJson(ErrorCode.E_400);
