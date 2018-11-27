@@ -11,10 +11,6 @@
               <FormItem prop="password" label="密码">
                 <Input type="password" v-model="formInline.password" placeholder="Password"/>
               </FormItem>
-              <!--<FormItem prop="password" label="验证码">-->
-                <!--<Input type="password" v-model="formInline.password" placeholder="Password" class="input"/>-->
-                <!--G52f-->
-              <!--</FormItem>-->
               <Checkbox style="margin-left:23px;margin-bottom: 10px">记住我</Checkbox>
               <FormItem>
                 <Button type="primary" @click="handleSubmit('formInline')" style="width: 80%">登录</Button>

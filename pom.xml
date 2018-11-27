@@ -12,6 +12,7 @@
         <module>oauth2</module>
         <module>shrio</module>
         <module>phone-camera</module>
+        <module>logger-demo</module>
     </modules>
 
     <parent>
