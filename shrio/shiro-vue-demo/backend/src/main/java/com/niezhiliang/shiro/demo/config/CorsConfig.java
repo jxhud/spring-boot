@@ -1,14 +1,10 @@
 package com.niezhiliang.shiro.demo.config;
 
-import com.niezhiliang.shiro.demo.utils.HttpContextUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @Author NieZhiLiang
