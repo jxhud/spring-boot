@@ -9,6 +9,9 @@ import './my-theme/index.less'
 import moment from 'moment'
 import time from './components/time'
 import Vuex from 'vuex'
+ import axios from  'axios'
+
+
 
 
 //时间格式化过滤器
@@ -24,6 +27,7 @@ Vue.prototype.timeFormat = function (value, formatString) {
 }
 
 Vue.config.productionTip = false
+axios.defaults.withCredentials = true
 Vue.use(iView,time);
 Vue.use(Vuex);
 

@@ -5,6 +5,9 @@ import router from '../router/index.js';
 
 axios.interceptors.request.use(config => {
   // loading
+  config.headers = {
+    'Content-Type': 'application/json; charset=UTF-8' // 设置很关键
+  }
   return config
 }, error => {
   return Promise.reject(error)
@@ -51,11 +54,7 @@ export default {
       baseURL: 'http://127.0.0.1:8080',
       url,
       data: data,
-      timeout: 10000,
-      headers: {
-        'X-Requested-With': 'XMLHttpRequest',
-        'Content-Type': 'application/json; charset=UTF-8'
-      }
+      timeout: 10000
     }).then(
       (response) => {
         return checkStatus(response)

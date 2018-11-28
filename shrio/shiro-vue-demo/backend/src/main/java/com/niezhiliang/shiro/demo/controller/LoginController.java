@@ -28,7 +28,7 @@ public class LoginController {
      */
     @RequestMapping(value = "in")
     public String login(@RequestBody JSONObject requestJson) {
-        CommonUtils.hasAllRequired(requestJson,"userName,password,rememberMe");
+        CommonUtils.hasAllRequired(requestJson,"userName,password");
         return loginService.userLogin(requestJson);
     }
 

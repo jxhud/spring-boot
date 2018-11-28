@@ -26,19 +26,19 @@ public class AjaxPermissionsAuthorizationFilter extends FormAuthenticationFilter
         returnMo.setCode(ErrorCode.E_20011.getCode());
         PrintWriter out = null;
         HttpServletResponse res = (HttpServletResponse) response;
-//        try {
-//            res.setCharacterEncoding("UTF-8");
-//            res.setContentType("application/json");
-//            out = response.getWriter();
-//            out.println(JSON.toJSONString(returnMo));
-//        } catch (Exception e) {
-//        } finally {
-//            if (null != out) {
-//                out.flush();
-//                out.close();
-//            }
-//        }
-        return true;
+        try {
+            res.setCharacterEncoding("UTF-8");
+            res.setContentType("application/json");
+            out = response.getWriter();
+            out.println(JSON.toJSONString(returnMo));
+        } catch (Exception e) {
+        } finally {
+            if (null != out) {
+                out.flush();
+                out.close();
+            }
+        }
+        return false;
     }
 
     @Bean

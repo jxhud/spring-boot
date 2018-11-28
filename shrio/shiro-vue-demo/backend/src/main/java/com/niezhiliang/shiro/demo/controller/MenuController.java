@@ -45,6 +45,7 @@ public class MenuController {
 
     @RequestMapping(value = "query")
     @Log(value = "查询菜单列表")
+    @RequiresPermissions(value = "menu:list")
     public String query() {
         JSONObject requestJson = new JSONObject();
         return menuService.queryMenu(requestJson);

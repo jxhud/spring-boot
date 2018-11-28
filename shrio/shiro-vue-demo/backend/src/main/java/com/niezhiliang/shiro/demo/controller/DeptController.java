@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.niezhiliang.shiro.demo.annotation.Log;
 import com.niezhiliang.shiro.demo.service.DeptService;
 import com.niezhiliang.shiro.demo.utils.CommonUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,6 +44,7 @@ public class DeptController {
 
     @RequestMapping(value = "query")
     @Log(value = "查询部门列表")
+    @RequiresPermissions(value = "updsfds")
     public String query() {
          JSONObject requestJson = new JSONObject();
         return deptService.selectDept(requestJson);

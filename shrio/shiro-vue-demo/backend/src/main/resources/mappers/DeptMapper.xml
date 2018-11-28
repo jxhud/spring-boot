@@ -6,6 +6,7 @@
     <result column="dept_name" jdbcType="VARCHAR" property="deptName" />
     <result column="parent_id" jdbcType="INTEGER" property="parentId" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
