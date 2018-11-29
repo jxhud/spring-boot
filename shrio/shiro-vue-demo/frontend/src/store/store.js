@@ -17,6 +17,10 @@ const mutations = {
   },
   setOption(state,opens) {
     state.menu.open_names = opens;
+  },
+  initMenus(state) {
+    state.menu.active = '',
+    state.menu.open_names = []
   }
 }
 

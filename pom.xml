@@ -13,6 +13,7 @@
         <module>shrio</module>
         <module>phone-camera</module>
         <module>logger-demo</module>
+        <module>permission-tree</module>
     </modules>
 
     <parent>

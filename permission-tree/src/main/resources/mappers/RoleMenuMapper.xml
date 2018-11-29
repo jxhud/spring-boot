@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.niezhiliang.permission.tree.mapper.RoleMenuMapper">
+  <resultMap id="roleModel" type="com.niezhiliang.permission.tree.entity.RoleMenuInfo">
+    <id column="id" property="roleId"></id>
+    <result column="role_name" property="roleName"></result>
+    <collection property="menuList" column="id" select="getMenu"></collection>
+  </resultMap>
+
+  <select id="getRoleInfo" resultMap="roleModel">
+    select id ,role_name from role
+  </select>
+  <select id="getMenu" resultType="com.niezhiliang.permission.tree.domain.Menu">
+   select m.* from menu m left join role_menu r on m.id = r.menu_id
+   where r.role_id = #{id}
+  </select>
+</mapper>

@@ -1,5 +1,8 @@
 package com.niezhiliang.shiro.demo.shiro;
 
+import com.liumapp.redis.operator.hash.HashUtil;
+import com.liumapp.redis.operator.string.StringUtil;
+import com.niezhiliang.common.utils.str.StringTools;
 import com.niezhiliang.shiro.demo.constant.UserStatus;
 import com.niezhiliang.shiro.demo.domain.Menu;
 import com.niezhiliang.shiro.demo.domain.Role;
@@ -36,23 +39,26 @@ public class UserRealm extends AuthorizingRealm {
     @Autowired
     private MenuService menuService;
 
+
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principal) {
         User user = (User) SecurityUtils.getSubject().getPrincipal();
-        SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
 
-        // 获取用户角色集
-        List<Role> roleList = roleService.getUserRoleByUserId(user.getUserId());
-        Set<String> roleSet = roleList.stream().map(Role::getRoleName).collect(Collectors.toSet());
-        simpleAuthorizationInfo.setRoles(roleSet);
+        SimpleAuthorizationInfo simpleAuthorizationInfo = null;
+            simpleAuthorizationInfo = new SimpleAuthorizationInfo();
+            // 获取用户角色集
+            List<Role> roleList = roleService.getUserRoleByUserId(user.getUserId());
+            Set<String> roleSet = roleList.stream().map(Role::getRoleName).collect(Collectors.toSet());
+            simpleAuthorizationInfo.setRoles(roleSet);
 
-        // 获取用户权限集
-        if (!roleList.isEmpty()) {
-            List<Menu> permissionList = menuService.getMenuByRoleId(roleList.get(0).getId());
-            Set<String> permissionSet = permissionList.stream().map(Menu::getPermissions).collect(Collectors.toSet());
-            simpleAuthorizationInfo.setStringPermissions(permissionSet);
-        }
+            // 获取用户权限集
+            if (!roleList.isEmpty()) {
+                List<Menu> permissionList = menuService.getMenuByRoleId(roleList.get(0).getId());
+                Set<String> permissionSet = permissionList.stream().map(Menu::getPermissions).collect(Collectors.toSet());
+                simpleAuthorizationInfo.setStringPermissions(permissionSet);
+            }
         return simpleAuthorizationInfo;
+
     }
 
     @Override

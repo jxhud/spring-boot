@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.niezhiliang.permission.tree.mapper.MenuMapper">
+  <resultMap id="BaseResultMap" type="com.niezhiliang.permission.tree.domain.Menu">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="icon" jdbcType="VARCHAR" property="icon" />
+    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
+    <result column="menu_name" jdbcType="VARCHAR" property="menuName" />
+    <result column="permissions" jdbcType="VARCHAR" property="permissions" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+
+
+  <resultMap id="RoleMenuResult" type="com.niezhiliang.permission.tree.entity.TmpMenu">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="icon" jdbcType="VARCHAR" property="icon" />
+    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
+    <result column="menu_name" jdbcType="VARCHAR" property="menuName" />
+    <result column="permissions" jdbcType="VARCHAR" property="permissions" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="role_id" jdbcType="INTEGER" property="roleId"></result>
+  </resultMap>
+
+  <resultMap id="MenuModel" type="com.niezhiliang.permission.tree.entity.MenuTree" extends="RoleMenuResult">
+    <collection property="menuList" javaType="java.util.ArrayList" column="{id=id,role_id=role_id}"  ofType="com.niezhiliang.permission.tree.domain.Menu"
+    select="selectSubMenu"
+    ></collection>
+  </resultMap>
+
+    <select id="getMenus" resultMap="MenuModel">
+      select m.*
+        ,r.role_id
+      from menu  m left join role_menu r on r.menu_id = m.id where m.parent_id = 0
+      <if test="roleId != null">
+        and r.role_id = #{roleId}
+      </if>
+    </select>
+    <select id="selectSubMenu" resultMap="MenuModel">
+      select * from menu  m left join role_menu r on r.menu_id = m.id where m.parent_id = #{id}
+      <if test="role_id != null">
+        and r.role_id = #{role_id}
+      </if>
+    </select>
+
+</mapper>

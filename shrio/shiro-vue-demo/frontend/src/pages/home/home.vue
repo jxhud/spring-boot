@@ -3,6 +3,14 @@
     <Layout class="home">
       <Header style="background-color: #fffee6;height: 50px">
         <h2 style="color: #ffc900">Shiro Demo</h2>
+        <div class="layout-ceiling">
+          <div class="layout-ceiling-main">
+            <a href="#">注册登录</a> |
+            <a href="#">帮助中心</a> |
+            <a href="#">安全中心</a> |
+            <a href="#">服务大厅</a>
+          </div>
+        </div>
       </Header>
       <Layout>
         <Sider hide-trigger style="background-color:#fffee6;">
@@ -39,6 +47,7 @@
 <script>
   import store from '../../store/store'
   import { mapState,mapMutations,mapActions } from 'vuex';
+  import http from '../../components/http'
 
   export default {
     name: 'App',
@@ -56,13 +65,21 @@
     store,
     methods: {
       ...mapMutations([
-        'setMenu','setOption'
+        'setMenu','setOption','initMenus'
       ]),
       changeItem: function (name) {
         this.$store.commit('setMenu',name)
       },
       getOpenMenu: function (name) {
         this.$store.commit('setOption',name)
+      },
+      loginout :function () {
+        http.get('/login/out').then((res) => {
+          if (res.code == 100) {
+            this.$store.commit('initMenus')
+            this.$Message.success('退出成功');
+          }
+        })
       }
     },
   }
